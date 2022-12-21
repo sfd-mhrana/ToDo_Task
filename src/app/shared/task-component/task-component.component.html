@@ -7,6 +7,8 @@
   <p>End Date: {{data.task?.end_date}}</p>
   <p>Status: {{getStatus(data.task?.status)}}</p>
   <p>Assigned Person: {{getAssignedPerson(data.task?.assigned_person)}}</p>
+  <p>Sub Task: {{data.task?.sub_task.join(",")}}</p>
+
   <p><button (click)="editDialog(data.task?.id)">Edit</button></p>
   <p><button (click)="closeDialog()">Close</button></p>
 </div>

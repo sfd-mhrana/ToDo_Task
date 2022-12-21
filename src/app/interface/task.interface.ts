@@ -8,11 +8,10 @@ export interface Task{
     status:number;
     assigned_person:string;
     attachment:string[];
-    sub_task:Sub_Task[];
+    sub_task:string[];
 }
 
 export interface Sub_Task{
-    id:string;
     title:string;
     description:string;
 }

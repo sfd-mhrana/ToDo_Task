@@ -24,12 +24,17 @@
         <option value="p3">Person 3</option>
     </select>
 
-    <input type="file" (change)="file($event)" placeholder="Task Title" multiple/>
+    <input type="file" (change)="file($event)" placeholder="Task Title" multiple />
     <div class="subtask">
         <p>Sub Tasks</p>
-        <div class="field">
-            <input/>
+        <div formArrayName="sub_task">
+            <div class="field" *ngFor="let data of subTasks?.controls; let i = index"> 
+                <input [formControlName]="i" placeholder="Title" />
+                <p (click)="removeFormArrayField('sub_task', i)">Del</p>
+            </div>
         </div>
+
+        <p class="addnew" (click)="onAddNewFormString('sub_task')">Add New</p>
     </div>
 
     <input type="submit" value="Submit">

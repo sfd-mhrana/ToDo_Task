@@ -15,6 +15,7 @@ export class AddTaskComponent implements OnInit {
   // Form Template Ref
   @ViewChild('formElement') formElement: NgForm;
   dataForm: FormGroup;
+  subTasks?: FormArray;
 
   //Static Data
   status: StatusInterface[] = Status;
@@ -39,6 +40,12 @@ export class AddTaskComponent implements OnInit {
   getDataByID(){
     const taskdata=this.service.getSingledata(this.id);
     this.dataForm.patchValue(taskdata);
+    
+    this.subTasks.removeAt(0);
+    taskdata.sub_task.forEach(f => {
+      const ctrl = this.fb.control(f, Validators.required);
+      (this.dataForm?.get('sub_task') as FormArray).push(ctrl);
+    });
   }
 
   private initDataForm() {
@@ -52,15 +59,19 @@ export class AddTaskComponent implements OnInit {
       status: [null, Validators.required],
       assigned_person: [null, Validators.required],
       attachment: [null],
-      sub_task: this.fb.array([]),
+      sub_task: this.fb.array([
+        this.createStringElement()
+      ]),
     });
+    this.subTasks = this.dataForm.get('sub_task') as FormArray;
   }
 
   onSubmit() {
-    if (this.dataForm.invalid) {
+    if (this.dataForm.invalid || parseInt(this.dataForm.value.title.length)>100|| parseInt(this.dataForm.value.description.length)>150) {
       alert("Something Wrong")
       return;
     }
+    
     if (this.id) {
       this.service.updateMyData(this.dataForm.value)
     } else {
@@ -91,6 +102,29 @@ export class AddTaskComponent implements OnInit {
       })
       // console.warn(this.dataForm.value)
     }
+  }
+
+  createStringElement() {
+    return this.fb.control('', Validators.required);
+  }
+
+  onAddNewFormString(formControl: string) {
+    (this.dataForm?.get(formControl) as FormArray).push(this.createStringElement());
+  }
+
+  removeFormArrayField(formControl: string, index: number) {
+    let formDataArray: FormArray;
+    switch (formControl) {
+      case 'sub_task': {
+        formDataArray = this.subTasks;
+        break;
+      }
+      default: {
+        formDataArray = null;
+        break;
+      }
+    }
+    formDataArray?.removeAt(index);
   }
 
 }
