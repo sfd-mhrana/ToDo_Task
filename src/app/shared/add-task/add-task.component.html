@@ -1,0 +1,36 @@
+<div class="header">
+    <h2>{{id ? 'Edit' : 'Add New'}} Task</h2>
+</div>
+
+<form #formElement="ngForm" [formGroup]="dataForm" (ngSubmit)="onSubmit()" fxLayout="row wrap" fxLayoutAlign="center">
+    <input type="text" formControlName="title" placeholder="Task Title" />
+    <input type="text" formControlName="description" placeholder="Task Description" />
+
+    <input type="date" formControlName="start_date" placeholder="Task Title" />
+    <input type="date" formControlName="end_date" placeholder="Task Title" />
+
+    <div class="radioButton">
+        <input type="radio" formControlName="priority" value="low" /> Low
+        <input type="radio" formControlName="priority" value="medium" />Medium
+        <input type="radio" formControlName="priority" value="high" />High
+    </div>
+
+    <select name="person" id="person" formControlName="status">
+        <option *ngFor="let data of status" [value]="data.value">{{data.viewValue}}</option>
+    </select>
+    <select name="person" id="person" formControlName="assigned_person">
+        <option value="p1">Person 1</option>
+        <option value="p2">Person 2</option>
+        <option value="p3">Person 3</option>
+    </select>
+
+    <input type="file" (change)="file($event)" placeholder="Task Title" multiple/>
+    <div class="subtask">
+        <p>Sub Tasks</p>
+        <div class="field">
+            <input/>
+        </div>
+    </div>
+
+    <input type="submit" value="Submit">
+</form>

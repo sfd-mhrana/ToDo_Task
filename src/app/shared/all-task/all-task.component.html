@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="button">
+        <button routerLink="add">
+            Add Task
+        </button>
+    </div>
+
+    <div class="status">
+        <div class="task-status" *ngFor="let status of taskStatus">
+            <h3>{{status.viewValue}}</h3>
+            <div class="task_name" *ngFor="let data of getStatusTask(status.value)" (click)="seeTaskDetails(data)">
+                {{data.title}}</div>
+        </div>
+    </div>
+</div>

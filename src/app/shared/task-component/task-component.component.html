@@ -1,0 +1,12 @@
+
+<div class="card" *ngIf="data">
+  <h1>{{data.task?.title}}</h1>
+  <p>{{data.task?.description}}</p>
+  <p>Priority: {{priority(data.task?.priority)}}</p>
+  <p>Start Date: {{data.task?.start_date}}</p>
+  <p>End Date: {{data.task?.end_date}}</p>
+  <p>Status: {{getStatus(data.task?.status)}}</p>
+  <p>Assigned Person: {{getAssignedPerson(data.task?.assigned_person)}}</p>
+  <p><button (click)="editDialog(data.task?.id)">Edit</button></p>
+  <p><button (click)="closeDialog()">Close</button></p>
+</div>
